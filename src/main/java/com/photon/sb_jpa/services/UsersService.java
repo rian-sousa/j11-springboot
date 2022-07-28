@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.photon.sb_jpa.entities.Users;
 import com.photon.sb_jpa.repositories.UsersRepository;
+import com.photon.sb_jpa.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsersService {
@@ -21,7 +22,7 @@ public class UsersService {
 
     public Users findById(Long id){
         Optional<Users> obj = repository.findById(id);      //Serviço, encontrar por id
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Users insert(Users obj){                 //Serviço, inserir o usuário
